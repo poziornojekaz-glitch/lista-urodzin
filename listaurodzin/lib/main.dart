@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'screens/home_page.dart';
 import 'services/notification_service.dart';
 import 'state/app_state.dart';
@@ -8,6 +9,9 @@ import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicjalizacja formatowania dat dla wszystkich języków (PL, EN, DE, RU)
+  await initializeDateFormatting();
 
   // Inicjalizacja powiadomień AwesomeNotifications
   await NotificationService.initialize();
