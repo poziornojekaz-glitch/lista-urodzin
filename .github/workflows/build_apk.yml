@@ -34,12 +34,26 @@ jobs:
       - name: Dopasuj wersje Android SDK (compileSdk 35, minSdk 21)
         working-directory: listaurodzin
         run: |
-          sed -i 's/compileSdkVersion .*/compileSdkVersion 35/' android/app/build.gradle* || true
-          sed -i 's/compileSdk = .*/compileSdk = 35/' android/app/build.gradle* || true
-          sed -i 's/minSdkVersion .*/minSdkVersion 21/' android/app/build.gradle* || true
-          sed -i 's/minSdk = .*/minSdk = 21/' android/app/build.gradle* || true
-          sed -i 's/targetSdkVersion .*/targetSdkVersion 35/' android/app/build.gradle* || true
-          sed -i 's/targetSdk = .*/targetSdk = 35/' android/app/build.gradle* || true
+          find android -name "build.gradle*" -exec sed -i 's/flutter.compileSdkVersion/35/g' {} + || true
+          find android -name "build.gradle*" -exec sed -i 's/flutter.minSdkVersion/21/g' {} + || true
+          find android -name "build.gradle*" -exec sed -i 's/flutter.targetSdkVersion/35/g' {} + || true
+          find android -name "build.gradle*" -exec sed -i -E 's/(compileSdk|compileSdkVersion)( =)? [0-9]+/\1\2 35/g' {} + || true
+          find android -name "build.gradle*" -exec sed -i -E 's/(minSdk|minSdkVersion)( =)? [0-9]+/\1\2 21/g' {} + || true
+          echo "flutter.compileSdkVersion=35" >> android/local.properties || true
+          echo "flutter.minSdkVersion=21" >> android/local.properties || true
+          echo "flutter.targetSdkVersion=35" >> android/local.properties || true
+          if [ -f android/build.gradle ]; then
+            echo "" >> android/build.gradle
+            echo "subprojects {" >> android/build.gradle
+            echo "    afterEvaluate { project ->" >> android/build.gradle
+            echo "        if (project.hasProperty('android')) {" >> android/build.gradle
+            echo "            project.android {" >> android/build.gradle
+            echo "                compileSdkVersion 35" >> android/build.gradle
+            echo "            }" >> android/build.gradle
+            echo "        }" >> android/build.gradle
+            echo "    }" >> android/build.gradle
+            echo "}" >> android/build.gradle
+          fi
 
       - name: Pobierz pakiety i zależności
         working-directory: listaurodzin
