@@ -42,11 +42,16 @@ class NotificationService {
     PowiadomieniaSettings ustawienia,
     String lang,
   ) async {
-    // 1. Czyścimy stare harmonogramy
-    await AwesomeNotifications().cancelAllSchedules();
+    try {
+      // 1. Czyścimy stare harmonogramy
+      await AwesomeNotifications().cancelAllSchedules();
 
-    String localTimeZone =
-        await AwesomeNotifications().getLocalTimeZoneIdentifier();
+      String localTimeZone;
+      try {
+        localTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
+      } catch (_) {
+        localTimeZone = 'UTC';
+      }
 
     String txtDzisiaj = AppTranslations.tr('reminder_today', lang);
     String txtJutro = AppTranslations.tr('reminder_tomorrow', lang);
@@ -119,6 +124,8 @@ class NotificationService {
           ),
         );
       }
+    } catch (e) {
+      // Ignorujemy błędy uprawnień powiadomień, aby aplikacja nigdy się nie zawiesiła
     }
   }
 }

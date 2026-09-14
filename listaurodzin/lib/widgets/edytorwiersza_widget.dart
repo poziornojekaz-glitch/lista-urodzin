@@ -319,25 +319,27 @@ class _EdytorwierszaWidgetState extends State<EdytorwierszaWidget> {
                             ? _selectedDate
                             : CustomFunctions.ustawRok1900(_selectedDate);
 
-                        if (widget.editIndex >= 0 && widget.initialItem != null) {
-                          // Edycja istniejącego wpisu
-                          final updated = widget.initialItem!.copyWith(
-                            tekst: name,
-                            datazapisz: finalDate,
-                            czyRokWidoczny: _czyPokazacRok,
-                          );
-                          await state.updateUrodziny(widget.editIndex, updated);
-                        } else {
-                          // Nowy wpis
-                          final newItem = ListaItem(
-                            id: DateTime.now().millisecondsSinceEpoch,
-                            tekst: name,
-                            datazapisz: finalDate,
-                            czyRokWidoczny: _czyPokazacRok,
-                            czyPowiadamiac: true,
-                          );
-                          await state.addUrodziny(newItem);
-                        }
+                        try {
+                          if (widget.editIndex >= 0 && widget.initialItem != null) {
+                            // Edycja istniejącego wpisu
+                            final updated = widget.initialItem!.copyWith(
+                              tekst: name,
+                              datazapisz: finalDate,
+                              czyRokWidoczny: _czyPokazacRok,
+                            );
+                            await state.updateUrodziny(widget.editIndex, updated);
+                          } else {
+                            // Nowy wpis
+                            final newItem = ListaItem(
+                              id: DateTime.now().millisecondsSinceEpoch,
+                              tekst: name,
+                              datazapisz: finalDate,
+                              czyRokWidoczny: _czyPokazacRok,
+                              czyPowiadamiac: true,
+                            );
+                            await state.addUrodziny(newItem);
+                          }
+                        } catch (_) {}
 
                         if (context.mounted) {
                           Navigator.of(context).pop();

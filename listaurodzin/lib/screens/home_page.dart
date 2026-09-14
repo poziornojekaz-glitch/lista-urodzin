@@ -88,20 +88,21 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
 
-                      // Środek - Logo / Ikona kalendarza
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.25),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.cake_outlined, color: Colors.white, size: 28),
-                            SizedBox(width: 6),
-                            Icon(Icons.calendar_month, color: Colors.white, size: 28),
-                          ],
+                      // Środek - Logo aplikacji
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/images/logo.jpg',
+                          width: 52,
+                          height: 52,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(
+                              Icons.calendar_month,
+                              color: Colors.white,
+                              size: 32,
+                            );
+                          },
                         ),
                       ),
 
@@ -115,31 +116,11 @@ class _HomePageState extends State<HomePage> {
                             size: 32,
                           ),
                           onPressed: () async {
-                            bool? confirm = await showDialog<bool>(
+                            context.read<AppState>().prepareShareList();
+                            await showDialog(
                               context: context,
-                              builder: (alertCtx) => AlertDialog(
-                                title: Text(AppTranslations.tr('share_list', lang)),
-                                content: Text(AppTranslations.tr('share_confirm', lang)),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(alertCtx, false),
-                                    child: Text(AppTranslations.tr('back', lang)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(alertCtx, true),
-                                    child: Text(AppTranslations.tr('ok', lang)),
-                                  ),
-                                ],
-                              ),
+                              builder: (dialogCtx) => const OknoprzekazuWidget(),
                             );
-
-                            if (confirm == true && context.mounted) {
-                              context.read<AppState>().prepareShareList();
-                              await showDialog(
-                                context: context,
-                                builder: (dialogCtx) => const OknoprzekazuWidget(),
-                              );
-                            }
                           },
                         ),
                       ),

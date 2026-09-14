@@ -48,7 +48,7 @@ class Wiersz1Widget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 75,
+      height: 84,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -107,40 +107,40 @@ class Wiersz1Widget extends StatelessWidget {
                         ? itemData.tekst
                         : AppTranslations.tr('enter_name_or_event', lang),
                     style: const TextStyle(
-                      fontSize: 15,
+                      fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF2C3E50),
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
                       Text(
                         formattedDate.isNotEmpty ? formattedDate : 'Dodaj Datę',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: dateColor,
                         ),
                       ),
                       if (yearSuffix.isNotEmpty) ...[
-                        const SizedBox(width: 5),
+                        const SizedBox(width: 6),
                         Text(
                           yearSuffix,
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 15,
                             fontWeight: FontWeight.w500,
                             color: dateColor,
                           ),
                         ),
                       ],
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 14),
                       if (wiek.isNotEmpty)
                         Text(
                           wiek,
                           style: const TextStyle(
-                            fontSize: 13,
+                            fontSize: 15,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF556068),
                           ),

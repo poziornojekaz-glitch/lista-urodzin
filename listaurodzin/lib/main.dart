@@ -10,7 +10,7 @@ import 'theme/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inicjalizacja formatowania dat dla wszystkich języków (PL, EN, DE, RU)
+  // Inicjalizacja formatowania dat dla wszystkich języków
   await initializeDateFormatting();
 
   // Inicjalizacja powiadomień AwesomeNotifications
