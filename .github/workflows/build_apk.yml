@@ -31,9 +31,23 @@ jobs:
         working-directory: listaurodzin
         run: flutter create --platforms=android --org com.example .
 
+      - name: Dopasuj wersje Android SDK (compileSdk 35, minSdk 21)
+        working-directory: listaurodzin
+        run: |
+          sed -i 's/compileSdkVersion .*/compileSdkVersion 35/' android/app/build.gradle* || true
+          sed -i 's/compileSdk = .*/compileSdk = 35/' android/app/build.gradle* || true
+          sed -i 's/minSdkVersion .*/minSdkVersion 21/' android/app/build.gradle* || true
+          sed -i 's/minSdk = .*/minSdk = 21/' android/app/build.gradle* || true
+          sed -i 's/targetSdkVersion .*/targetSdkVersion 35/' android/app/build.gradle* || true
+          sed -i 's/targetSdk = .*/targetSdk = 35/' android/app/build.gradle* || true
+
       - name: Pobierz pakiety i zależności
         working-directory: listaurodzin
         run: flutter pub get
+
+      - name: Wygeneruj ikony aplikacji (Launcher Icon)
+        working-directory: listaurodzin
+        run: dart run flutter_launcher_icons || true
 
       - name: Zbuduj plik APK (Release)
         working-directory: listaurodzin
