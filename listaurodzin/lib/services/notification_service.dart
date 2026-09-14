@@ -124,8 +124,9 @@ class NotificationService {
           ),
         );
       }
-    } catch (e) {
-      // Ignorujemy błędy uprawnień powiadomień, aby aplikacja nigdy się nie zawiesiła
     }
+  } catch (e) {
+    // Ignorujemy błędy uprawnień powiadomień, aby aplikacja nigdy się nie zawiesiła
   }
+}
 }
